@@ -1,7 +1,5 @@
-import mainRouter from "./main.route.js";
-import postsRouter from "./posts.route.js";
+import postsRouter from "./posts.router.js";
 
 export default {
-  main: mainRouter,
   posts: postsRouter
 };

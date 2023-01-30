@@ -1,6 +1,10 @@
 {
   "server": {
-    "PORT": 5000
+    "PORT": 5000,
+    "CORS": {
+      "origin": "*",
+      "methods": ["GET", "PUT", "POST", "DELETE"]
+    }
   },
   "DB": {
     "MONGO": {
