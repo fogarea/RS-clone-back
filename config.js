@@ -1,6 +1,20 @@
-const { default: config } = await import("./config.json", {
-  assert: { type: "json" }
-});
+import * as dotenv from "dotenv";
+dotenv.config();
 
-export const server = config.server;
-export const DB = config.DB;
+export const server = {
+  PORT: process.env.PORT,
+  CORS: {
+    origin: "*",
+    methods: ["GET", "PUT", "POST", "DELETE"]
+  }
+};
+
+export const DB = {
+  MONGO: {
+    URL: process.env.MONGO_URL,
+    SETTINGS: {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    }
+  }
+};

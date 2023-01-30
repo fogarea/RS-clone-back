@@ -20,5 +20,6 @@ app.use(cors(server.CORS));
 app.use("/api", Routing.posts);
 
 // listen server on port: server.PORT
-const port = process.env.PORT || server.PORT;
-app.listen(port, () => console.log(`SERVER STARTED ON PORT ${port}`));
+app.listen(server.PORT, () =>
+  console.log(`SERVER STARTED ON PORT ${server.PORT}`)
+);
