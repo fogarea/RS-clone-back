@@ -1,0 +1,29 @@
+{
+  "name": "rs-clone-back",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "rs clone backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --no-warnings index.js",
+    "dev": "nodemon --no-warnings index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elijah-I/RS-clone-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Elijah-I/RS-clone-back/issues"
+  },
+  "homepage": "https://github.com/Elijah-I/RS-clone-back#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
