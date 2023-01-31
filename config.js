@@ -10,7 +10,7 @@ export const server = {
 };
 
 export const DB = {
-  MONGO: {
+  MONGO_CFG: {
     URL: process.env.MONGO_URL,
     SETTINGS: {
       useUnifiedTopology: true,

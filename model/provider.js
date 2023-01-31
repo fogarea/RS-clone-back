@@ -1,7 +1,7 @@
-import { DB } from "./../config.js";
+import { DB } from "../config.js";
 import mongoDB from "./mongo.db.js";
 
-class DataBase {
+class DB_Provider {
   constructor(db) {
     this.db = db;
     this.connect();
@@ -32,5 +32,5 @@ class DataBase {
   }
 }
 
-const mongo = new mongoDB(DB.MONGO);
-export default new DataBase(mongo);
+const mongo = new mongoDB(DB.MONGO_CFG);
+export default new DB_Provider(mongo);

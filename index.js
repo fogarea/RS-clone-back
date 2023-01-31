@@ -2,7 +2,7 @@
 import cors from "cors";
 import express from "express";
 
-import "./model/index.js";
+import "./model/provider.js";
 
 import { server } from "./config.js";
 import Routing from "./routing/index.js";

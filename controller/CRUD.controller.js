@@ -1,4 +1,4 @@
-import dataBase from "../model/index.js";
+import DB_Provider from "../model/provider.js";
 
 export class CRUDController {
   constructor(model, endpoint) {
@@ -8,7 +8,7 @@ export class CRUDController {
 
   async get(_, res) {
     try {
-      const items = await dataBase.find(this.model);
+      const items = await DB_Provider.find(this.model);
       res.json(items);
     } catch (e) {
       res.status(500).json({
@@ -22,7 +22,7 @@ export class CRUDController {
     const itemID = req.params?.id;
 
     try {
-      const item = await dataBase.findById(this.model, itemID);
+      const item = await DB_Provider.findById(this.model, itemID);
       res.json(item);
     } catch (e) {
       res.status(500).json({
@@ -34,7 +34,7 @@ export class CRUDController {
 
   async create(req, res) {
     try {
-      const createdItem = await dataBase.create(this.model, req.body);
+      const createdItem = await DB_Provider.create(this.model, req.body);
       res.json(createdItem);
     } catch (e) {
       res.status(500).json({
@@ -48,7 +48,7 @@ export class CRUDController {
     const item = req.body;
 
     try {
-      const updatedItem = await dataBase.update(this.model, item);
+      const updatedItem = await DB_Provider.update(this.model, item);
       res.json(updatedItem);
     } catch (e) {
       res.status(500).json({
@@ -64,7 +64,7 @@ export class CRUDController {
     const itemID = req.params?.id;
 
     try {
-      const deletedItem = await dataBase.delete(this.model, itemID);
+      const deletedItem = await DB_Provider.delete(this.model, itemID);
       res.json(deletedItem);
     } catch (e) {
       res.status(500).json({
