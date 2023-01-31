@@ -11,8 +11,12 @@ class DB_Provider {
     await this.db.connect();
   }
 
-  async find(model) {
-    return await this.db.find(model);
+  async findOne(model, query) {
+    return await this.db.findOne(model, query);
+  }
+
+  async findAll(model) {
+    return await this.db.findAll(model);
   }
 
   async findById(model, id) {

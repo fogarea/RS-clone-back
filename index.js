@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(cors(server.CORS));
 
 // create routes
+app.use("/auth", Routing.auth);
 app.use("/api", Routing.posts);
 
 // listen server on port: server.PORT

@@ -8,7 +8,7 @@ export class CRUDController {
 
   async get(_, res) {
     try {
-      const items = await DB_Provider.find(this.model);
+      const items = await DB_Provider.findAll(this.model);
       res.json(items);
     } catch (e) {
       res.status(500).json({

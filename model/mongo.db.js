@@ -21,7 +21,11 @@ class MongoDB {
     }
   }
 
-  async find(model) {
+  async findOne(model, query) {
+    return await model.findOne(query);
+  }
+
+  async findAll(model) {
     return await model.find();
   }
 
