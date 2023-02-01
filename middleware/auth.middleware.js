@@ -8,10 +8,8 @@ const die = (res, error) => {
   });
 };
 
-const withValidateAuth = (req, res, next) => {
-  if (req.method === "OPTIONS") {
-    next();
-  }
+const withAuth = (req, res, next) => {
+  if (req.method === "OPTIONS") next();
 
   try {
     const auth = req.headers.authorization;
@@ -32,4 +30,4 @@ const withValidateAuth = (req, res, next) => {
   }
 };
 
-export default withValidateAuth;
+export default withAuth;

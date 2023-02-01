@@ -3,14 +3,10 @@ import jwt from "jsonwebtoken";
 import { JWT } from "./../config.js";
 import User from "../model/schema/user.js";
 import DB_Provider from "../model/provider.js";
-import { validationResult } from "express-validator";
 
 class AuthController {
   async register(req, res) {
     try {
-      const validation = validationResult(req);
-      if (validation.errors.length) return this.die(res, validation);
-
       const createdUser = await DB_Provider.create(
         User,
         await this.encryptPassword(req.body)
@@ -26,9 +22,6 @@ class AuthController {
   }
 
   async login(req, res) {
-    const validation = validationResult(req);
-    if (validation.errors.length) return this.die(res, validation);
-
     const { login, password } = req.body;
 
     const user = await DB_Provider.findOne(User, { login });
