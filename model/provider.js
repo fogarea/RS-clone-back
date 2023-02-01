@@ -19,8 +19,8 @@ class DB_Provider {
     return await this.db.findAll(model);
   }
 
-  async findById(model, id) {
-    return await this.db.findById(model, id);
+  async findById(model, id, filter = false) {
+    return await this.db.findById(model, id, filter);
   }
 
   async create(model, data) {

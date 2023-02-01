@@ -1,10 +1,7 @@
 import { Router } from "express";
 import authController from "../controller/auth.controller.js";
 import { withRequired } from "../middleware/required.middleware.js";
-import {
-  withUserExists,
-  withValidPassword
-} from "../middleware/login.middleware.js";
+import { withUserExists, withValidPassword } from "../middleware/login.middleware.js";
 import {
   withEncryptedPassword,
   withRequiredLength,
@@ -16,7 +13,7 @@ const router = new Router();
 router.post(
   "/register",
   [
-    withRequired(["login", "password", "sex"]),
+    withRequired(["login", "password", "gender"]),
     withRequiredLength(["login", "password"]),
     withUniqLogin,
     withEncryptedPassword

@@ -29,8 +29,9 @@ class MongoDB {
     return await model.find();
   }
 
-  async findById(model, id) {
+  async findById(model, id, filter) {
     this.validateId(id);
+    if (filter) return await model.findById(id).select(filter.join(" "));
     return await model.findById(id);
   }
 

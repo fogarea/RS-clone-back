@@ -18,11 +18,12 @@ export class CRUDController {
     }
   }
 
-  async getById(req, res) {
+  async getById(req, res, raw = false) {
     const itemID = req.params?.id;
 
     try {
       const item = await DB_Provider.findById(this.model, itemID);
+      if (raw) return item;
       return res.json(item);
     } catch (e) {
       return res.status(500).json({
@@ -34,6 +35,7 @@ export class CRUDController {
 
   async create(req, res) {
     try {
+      req.body.author = req.user.id;
       const createdItem = await DB_Provider.create(this.model, req.body);
       return res.json(createdItem);
     } catch (e) {
@@ -52,9 +54,7 @@ export class CRUDController {
       return res.json(updatedItem);
     } catch (e) {
       return res.status(500).json({
-        message: `CANNOT UPDATE ${this.endpoint.toUpperCase()} WITH ID: ${
-          item._id
-        }`,
+        message: `CANNOT UPDATE ${this.endpoint.toUpperCase()} WITH ID: ${item._id}`,
         error: e.message
       });
     }
