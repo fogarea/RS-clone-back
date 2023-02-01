@@ -13,4 +13,4 @@ const withValidateRequired = body(["login", "password"]).custom(
   }
 );
 
-export default [withValidateRequired];
+export default withValidateRequired;
