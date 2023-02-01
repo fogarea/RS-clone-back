@@ -9,9 +9,9 @@ export class CRUDController {
   async get(_, res) {
     try {
       const items = await DB_Provider.findAll(this.model);
-      res.json(items);
+      return res.json(items);
     } catch (e) {
-      res.status(500).json({
+      return res.status(500).json({
         message: `CANNOT READ ${this.endpoint.toUpperCase()}`,
         error: e.message
       });
@@ -23,9 +23,9 @@ export class CRUDController {
 
     try {
       const item = await DB_Provider.findById(this.model, itemID);
-      res.json(item);
+      return res.json(item);
     } catch (e) {
-      res.status(500).json({
+      return res.status(500).json({
         message: `CANNOT GET ${this.endpoint.toUpperCase()} BY ID: ${itemID}`,
         error: e.message
       });
@@ -35,9 +35,9 @@ export class CRUDController {
   async create(req, res) {
     try {
       const createdItem = await DB_Provider.create(this.model, req.body);
-      res.json(createdItem);
+      return res.json(createdItem);
     } catch (e) {
-      res.status(500).json({
+      return res.status(500).json({
         message: `CANNOT CREATE ${this.endpoint.toUpperCase()}`,
         error: e.message
       });
@@ -49,9 +49,9 @@ export class CRUDController {
 
     try {
       const updatedItem = await DB_Provider.update(this.model, item);
-      res.json(updatedItem);
+      return res.json(updatedItem);
     } catch (e) {
-      res.status(500).json({
+      return res.status(500).json({
         message: `CANNOT UPDATE ${this.endpoint.toUpperCase()} WITH ID: ${
           item._id
         }`,
@@ -65,9 +65,9 @@ export class CRUDController {
 
     try {
       const deletedItem = await DB_Provider.delete(this.model, itemID);
-      res.json(deletedItem);
+      return res.json(deletedItem);
     } catch (e) {
-      res.status(500).json({
+      return res.status(500).json({
         message: `CANNOT DELETE ${this.endpoint.toUpperCase()} WITH ID: ${itemID}`,
         error: e.message
       });
