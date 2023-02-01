@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JWT } from "./../config.js";
+import { JWT } from "../config.js";
 
 const die = (res, error) => {
   return res.status(401).json({
@@ -8,7 +8,7 @@ const die = (res, error) => {
   });
 };
 
-export default (req, res, next) => {
+const withValidateAuth = (req, res, next) => {
   if (req.method === "OPTIONS") {
     next();
   }
@@ -31,3 +31,5 @@ export default (req, res, next) => {
     return die(res, e.message);
   }
 };
+
+export default withValidateAuth;

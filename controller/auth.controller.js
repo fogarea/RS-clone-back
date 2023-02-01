@@ -9,7 +9,7 @@ class AuthController {
   async register(req, res) {
     try {
       const validation = validationResult(req);
-      if (validation.errors.length) return this.die(validation);
+      if (validation.errors.length) return this.die(res, validation);
 
       const createdUser = await DB_Provider.create(
         User,
@@ -17,6 +17,7 @@ class AuthController {
       );
       return res.json(createdUser);
     } catch (e) {
+      console.log(e);
       return res.status(500).json({
         message: `USER CREATION FAILED`,
         error: e.message
@@ -26,7 +27,7 @@ class AuthController {
 
   async login(req, res) {
     const validation = validationResult(req);
-    if (validation.errors.length) return this.die(validation);
+    if (validation.errors.length) return this.die(res, validation);
 
     const { login, password } = req.body;
 
@@ -58,7 +59,7 @@ class AuthController {
     return jwt.sign(payload, JWT.SECRET, { expiresIn: "1h" });
   }
 
-  die(validation) {
+  die(res, validation) {
     const { status, message, error } = validation.errors[0].msg;
     return res.status(status).json({ message, error });
   }
