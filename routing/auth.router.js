@@ -2,6 +2,11 @@ import { Router } from "express";
 import authController from "../controller/auth.controller.js";
 import { withRequired } from "../middleware/required.middleware.js";
 import {
+  withUserExists,
+  withValidPassword
+} from "../middleware/login.middleware.js";
+import {
+  withEncryptedPassword,
   withRequiredLength,
   withUniqLogin
 } from "../middleware/register.middleware.js";
@@ -13,14 +18,19 @@ router.post(
   [
     withRequired(["login", "password", "sex"]),
     withRequiredLength(["login", "password"]),
-    withUniqLogin
+    withUniqLogin,
+    withEncryptedPassword
   ],
   authController.register.bind(authController)
 );
 
 router.post(
   "/login",
-  withRequired(["login", "password"]),
+  [
+    withRequired(["login", "password"]), //
+    withUserExists,
+    withValidPassword
+  ],
   authController.login.bind(authController)
 );
 

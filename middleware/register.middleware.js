@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import User from "../model/schema/user.js";
 import DB_Provider from "../model/provider.js";
 
@@ -41,6 +42,14 @@ export const withUniqLogin = async (req, res, next) => {
       error: `User with login '${login}' already exists`
     });
   }
+
+  next();
+};
+
+export const withEncryptedPassword = async (req, res, next) => {
+  if (req.method === "OPTIONS") next();
+
+  req.body.password = await bcrypt.hash(req.body.password, 10);
 
   next();
 };
