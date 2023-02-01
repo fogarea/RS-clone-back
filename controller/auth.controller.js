@@ -24,7 +24,7 @@ class AuthController {
     };
 
     const token = jwt.sign(payload, JWT.SECRET, {
-      expiresIn: "1h"
+      expiresIn: JWT.LIFE
     });
 
     return res.json({ token });

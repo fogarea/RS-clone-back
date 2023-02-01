@@ -20,5 +20,6 @@ export const DB = {
 };
 
 export const JWT = {
-  SECRET: process.env.JWT_SECRET
+  SECRET: process.env.JWT_SECRET,
+  LIFE: process.env.JWT_LIFETIME
 };
