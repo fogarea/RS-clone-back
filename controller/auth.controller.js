@@ -13,7 +13,6 @@ class AuthController {
       ]);
       return res.json(createdUser);
     } catch (e) {
-      console.log(e);
       return res.status(500).json({
         message: `USER CREATION FAILED`,
         error: e.message
@@ -27,11 +26,24 @@ class AuthController {
       login: req.user.login
     };
 
-    const token = jwt.sign(payload, JWT.SECRET, {
-      expiresIn: JWT.LIFE
+    const accessToken = jwt.sign(payload, JWT.SECRET.ACCESS, {
+      expiresIn: JWT.LIFE.ACCESS
     });
 
-    return res.json({ token });
+    const refreshToken = jwt.sign(payload, JWT.SECRET.REFRESH, {
+      expiresIn: JWT.LIFE.REFRESH
+    });
+
+    return res
+      .cookie("X-Refresh-Token", refreshToken, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+        maxAge: 365 * 24 * 60 * 60 * 1000
+      })
+      .header("X-Access-Token", accessToken)
+      .status(200)
+      .json(null);
   }
 }
 

@@ -1,6 +1,7 @@
 // imports
 import cors from "cors";
 import express from "express";
+import cookies from "cookie-parser";
 
 import "./model/provider.js";
 
@@ -16,11 +17,12 @@ app.use(express.json());
 // handle CORS
 app.use(cors(server.CORS));
 
+// parse cookies
+app.use(cookies());
+
 // create routes
 app.use("/auth", Routing.auth);
 app.use("/api", Routing.posts);
 
 // listen server on port: server.PORT
-app.listen(server.PORT, () =>
-  console.log(`SERVER STARTED ON PORT ${server.PORT}`)
-);
+app.listen(server.PORT, () => console.log(`SERVER STARTED ON PORT ${server.PORT}`));

@@ -33,10 +33,11 @@ export class CRUDController {
     }
   }
 
-  async create(req, res) {
+  async create(req, res, raw = false) {
     try {
       req.body.author = req.user.id;
       const createdItem = await DB_Provider.create(this.model, req.body);
+      if (raw) return createdItem;
       return res.json(createdItem);
     } catch (e) {
       return res.status(500).json({

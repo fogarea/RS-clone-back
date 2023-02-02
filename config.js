@@ -4,7 +4,10 @@ dotenv.config();
 export const server = {
   PORT: process.env.PORT,
   CORS: {
-    origin: "*",
+    origin: ["http://localhost:3000", "https://elijah-i.github.io"],
+    credentials: true,
+    preflightContinue: true,
+    exposedHeaders: ["X-Access-Token"],
     methods: ["GET", "PUT", "POST", "DELETE"]
   }
 };
@@ -20,6 +23,12 @@ export const DB = {
 };
 
 export const JWT = {
-  SECRET: process.env.JWT_SECRET,
-  LIFE: process.env.JWT_LIFETIME
+  SECRET: {
+    ACCESS: process.env.JWT_SECRET_ACCESS,
+    REFRESH: process.env.JWT_SECRET_REFRESH
+  },
+  LIFE: {
+    ACCESS: process.env.JWT_LIFETIME_ACCESS,
+    REFRESH: process.env.JWT_LIFETIME_REFRESH
+  }
 };
