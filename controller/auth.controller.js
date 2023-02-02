@@ -6,7 +6,11 @@ import DB_Provider from "../model/provider.js";
 class AuthController {
   async register(req, res) {
     try {
-      const createdUser = await DB_Provider.create(User, req.body);
+      const createdUser = await DB_Provider.create(User, req.body, [
+        "_id",
+        "login",
+        "gender"
+      ]);
       return res.json(createdUser);
     } catch (e) {
       console.log(e);

@@ -23,8 +23,8 @@ class DB_Provider {
     return await this.db.findById(model, id, filter);
   }
 
-  async create(model, data) {
-    return await this.db.create(model, data);
+  async create(model, data, filter = false) {
+    return await this.db.create(model, data, filter);
   }
 
   async update(model, data) {

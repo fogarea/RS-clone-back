@@ -35,7 +35,11 @@ class MongoDB {
     return await model.findById(id);
   }
 
-  async create(model, data) {
+  async create(model, data, filter) {
+    if (filter) {
+      const item = await model.create(data);
+      return await this.findById(model, item._id, filter);
+    }
     return await model.create(data);
   }
 
