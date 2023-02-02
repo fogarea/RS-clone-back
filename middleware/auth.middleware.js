@@ -25,32 +25,38 @@ const renewToken = (req) => {
   }
 };
 
-const withAuth = (req, res, next) => {
-  if (req.method === "OPTIONS") next();
-
-  try {
-    const auth = req.headers.authorization;
-    if (!auth) return die(res, "no authorization token found");
-
-    let accessToken = auth.split(" ")[1];
-    if (!accessToken) return die(res, "no authorization token found");
+const withAuth = function (withDie = false) {
+  return (req, res, next) => {
+    if (req.method === "OPTIONS") next();
 
     try {
-      let refresh = false;
-      if (isJwtExpired(accessToken)) {
-        accessToken = renewToken(req);
-        refresh = true;
+      const auth = req.headers.authorization;
+      if (!auth && withDie) return die(res, "no authorization token found");
+      if (!auth) next();
+
+      let accessToken = auth ? auth.split(" ")[1] : null;
+      if (!accessToken && withDie) return die(res, "no authorization token found");
+      if (!accessToken) next();
+
+      try {
+        let refresh = false;
+        if (isJwtExpired(accessToken)) {
+          accessToken = renewToken(req);
+          refresh = true;
+        }
+        const decodedAccess = jwt.verify(accessToken, JWT.SECRET.ACCESS);
+        req.user = decodedAccess;
+        if (refresh) res.set("X-Access-Token", accessToken);
+        next();
+      } catch (err) {
+        if (withDie) return die(res, "invalid token");
+        next();
       }
-      const decodedAccess = jwt.verify(accessToken, JWT.SECRET.ACCESS);
-      req.user = decodedAccess;
-      if (refresh) res.set("X-Access-Token", accessToken);
+    } catch (e) {
+      if (withDie) return die(res, e.message);
       next();
-    } catch (err) {
-      return die(res, "invalid token");
     }
-  } catch (e) {
-    return die(res, e.message);
-  }
+  };
 };
 
 export default withAuth;

@@ -45,6 +45,11 @@ class AuthController {
       .status(200)
       .json(null);
   }
+
+  async user(req, res) {
+    const user = req.user ? req.user : null;
+    res.status(200).json(user);
+  }
 }
 
 export default new AuthController();
