@@ -36,10 +36,14 @@ const withAuth = (req, res, next) => {
     if (!accessToken) return die(res, "no authorization token found");
 
     try {
-      if (isJwtExpired(accessToken)) accessToken = renewToken(req);
+      let refresh = false;
+      if (isJwtExpired(accessToken)) {
+        accessToken = renewToken(req);
+        refresh = true;
+      }
       const decodedAccess = jwt.verify(accessToken, JWT.SECRET.ACCESS);
       req.user = decodedAccess;
-      res.set("X-Access-Token", accessToken);
+      if (refresh) res.set("X-Access-Token", accessToken);
       next();
     } catch (err) {
       return die(res, "invalid token");
