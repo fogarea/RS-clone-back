@@ -8,7 +8,7 @@ export const server = {
     credentials: true,
     preflightContinue: true,
     exposedHeaders: ["X-Access-Token"],
-    methods: ["GET", "PUT", "POST", "DELETE"]
+    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
   }
 };
 

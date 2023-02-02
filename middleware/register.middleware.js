@@ -16,6 +16,7 @@ export const withRequiredLength = function (fields) {
               message: `USER CREATION FAILED`,
               error: `login must be at least 3 symbols`
             });
+          break;
 
         case "password":
           if (value.length < 3 || value.length > 15)
@@ -23,6 +24,7 @@ export const withRequiredLength = function (fields) {
               message: `USER CREATION FAILED`,
               error: `password must be in between 3 and 15 symbols`
             });
+          break;
       }
     }
 
