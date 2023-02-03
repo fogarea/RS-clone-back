@@ -34,6 +34,10 @@ class DB_Provider {
   async delete(model, id) {
     return await this.db.delete(model, id);
   }
+
+  async clear(model) {
+    return await this.db.clear(model);
+  }
 }
 
 const mongo = new mongoDB(DB.MONGO_CFG);

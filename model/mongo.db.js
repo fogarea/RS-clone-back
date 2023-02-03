@@ -58,6 +58,10 @@ class MongoDB {
   validateId(id) {
     if (!id) throw new Error("NO `ID` WAS PROVIDED");
   }
+
+  async clear(model) {
+    await model.deleteMany({});
+  }
 }
 
 export default MongoDB;

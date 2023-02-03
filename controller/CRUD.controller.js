@@ -35,7 +35,6 @@ export class CRUDController {
 
   async create(req, res, raw = false) {
     try {
-      req.body.author = req.user.id;
       const createdItem = await DB_Provider.create(this.model, req.body);
       if (raw) return createdItem;
       return res.json(createdItem);
@@ -70,6 +69,19 @@ export class CRUDController {
     } catch (e) {
       return res.status(500).json({
         message: `CANNOT DELETE ${this.endpoint.toUpperCase()} WITH ID: ${itemID}`,
+        error: e.message
+      });
+    }
+  }
+
+  async clear(_, res, raw = false) {
+    try {
+      await DB_Provider.clear(this.model);
+      if (raw) return null;
+      return res.json(null);
+    } catch (e) {
+      return res.status(500).json({
+        message: `CANNOT CLEAR ${this.endpoint.toUpperCase()}`,
         error: e.message
       });
     }

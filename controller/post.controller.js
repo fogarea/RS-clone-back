@@ -14,6 +14,7 @@ class PostController extends CRUDController {
   }
 
   async create(req, res) {
+    if (req?.user?.id) req.body.author = req.user.id;
     const post = await super.create(req, res, "raw");
     return this.withAuthor(res, post);
   }
