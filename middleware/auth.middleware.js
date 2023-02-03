@@ -31,12 +31,16 @@ const withAuth = function (withDie = false) {
 
     try {
       const auth = req.headers.authorization;
-      if (!auth && withDie) return die(res, "no authorization token found");
-      if (!auth) next();
+      if (!auth) {
+        if (withDie) return die(res, "no authorization token found");
+        else next();
+      }
 
       let accessToken = auth ? auth.split(" ")[1] : null;
-      if (!accessToken && withDie) return die(res, "no authorization token found");
-      if (!accessToken) next();
+      if (!accessToken) {
+        if (withDie) return die(res, "no authorization token found");
+        else next();
+      }
 
       try {
         let refresh = false;
@@ -50,11 +54,11 @@ const withAuth = function (withDie = false) {
         next();
       } catch (err) {
         if (withDie) return die(res, "invalid token");
-        next();
+        else next();
       }
     } catch (e) {
       if (withDie) return die(res, e.message);
-      next();
+      else next();
     }
   };
 };
