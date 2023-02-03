@@ -34,6 +34,8 @@ class AuthController {
       expiresIn: JWT.LIFE.REFRESH
     });
 
+    req.user.password = "";
+
     return res
       .cookie("X-Refresh-Token", refreshToken, {
         httpOnly: true,
@@ -43,7 +45,7 @@ class AuthController {
       })
       .header("X-Access-Token", accessToken)
       .status(200)
-      .json(null);
+      .json(req.user);
   }
 
   async user(req, res) {
