@@ -22,37 +22,39 @@ class MongoDB {
   }
 
   async findOne(model, query) {
-    return await model.findOne(query);
+    const result = await model.findOne(query);
+    return { ...result._doc };
   }
 
   async findAll(model) {
-    return await model.find();
+    const result = await model.find();
+    return [...result];
   }
 
-  async findById(model, id, filter) {
+  async findById(model, id) {
     this.validateId(id);
-    if (filter) return await model.findById(id).select(filter.join(" "));
-    return await model.findById(id);
+
+    const result = await model.findById(id);
+    return { ...result._doc };
   }
 
-  async create(model, data, filter) {
-    if (filter) {
-      const item = await model.create(data);
-      return await this.findById(model, item._id, filter);
-    }
-    return await model.create(data);
+  async create(model, data) {
+    const item = await model.create(data);
+    return await this.findById(model, item._id);
   }
 
   async update(model, data) {
     this.validateId(data._id);
-    return await model.findByIdAndUpdate(data._id, data, {
+    const result = await model.findByIdAndUpdate(data._id, data, {
       new: true
     });
+    return { ...result._doc };
   }
 
   async delete(model, id) {
     this.validateId(id);
-    return await model.findByIdAndDelete(id);
+    const result = await model.findByIdAndDelete(id);
+    return { ...result._doc };
   }
 
   validateId(id) {
@@ -61,6 +63,22 @@ class MongoDB {
 
   async clear(model) {
     await model.deleteMany({});
+  }
+
+  normalize(result) {
+    if (result._id) result.id = result._id;
+    delete result.password;
+    delete result._id;
+    delete result.__v;
+    return result;
+  }
+
+  normalizeAll(results) {
+    const normalized = [];
+    for (const result of results) {
+      normalized.push(this.normalize(result._doc));
+    }
+    return normalized;
   }
 }
 

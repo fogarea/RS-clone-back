@@ -1,3 +1,4 @@
+import DB_Provider from "../model/provider.js";
 import Traning from "../model/schema/traning.js";
 import { CRUDController } from "./CRUD.controller.js";
 
@@ -12,7 +13,9 @@ class TraningController extends CRUDController {
     const tranings = [];
     for (const traning of req.body) {
       const data = { body: traning };
-      tranings.push(await super.create(data, res, "raw"));
+      const createdTraning = await super.create(data, res, "raw");
+      const cleanTraning = DB_Provider.normalize(createdTraning);
+      tranings.push(cleanTraning);
     }
 
     return res.json(tranings);

@@ -6,9 +6,10 @@ export class CRUDController {
     this.endpoint = endpoint;
   }
 
-  async get(_, res) {
+  async get(_, res, raw = false) {
     try {
       const items = await DB_Provider.findAll(this.model);
+      if (raw && typeof raw === "string") return items;
       return res.json(items);
     } catch (e) {
       return res.status(500).json({
@@ -23,7 +24,7 @@ export class CRUDController {
 
     try {
       const item = await DB_Provider.findById(this.model, itemID);
-      if (raw) return item;
+      if (raw && typeof raw === "string") return item;
       return res.json(item);
     } catch (e) {
       return res.status(500).json({
@@ -36,7 +37,7 @@ export class CRUDController {
   async create(req, res, raw = false) {
     try {
       const createdItem = await DB_Provider.create(this.model, req.body);
-      if (raw) return createdItem;
+      if (raw && typeof raw === "string") return createdItem;
       return res.json(createdItem);
     } catch (e) {
       return res.status(500).json({
@@ -77,7 +78,7 @@ export class CRUDController {
   async clear(_, res, raw = false) {
     try {
       await DB_Provider.clear(this.model);
-      if (raw) return null;
+      if (raw && typeof raw === "string") return null;
       return res.json(null);
     } catch (e) {
       return res.status(500).json({

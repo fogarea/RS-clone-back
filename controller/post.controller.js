@@ -8,6 +8,12 @@ class PostController extends CRUDController {
     super(Post, "posts");
   }
 
+  async get(req, res) {
+    let items = await super.get(req, res, "raw");
+    items = DB_Provider.normalizeAll(items);
+    return res.json(items);
+  }
+
   async getById(req, res) {
     const post = await super.getById(req, res, "raw");
     return this.withAuthor(res, post);
@@ -20,12 +26,9 @@ class PostController extends CRUDController {
   }
 
   async withAuthor(res, post) {
-    const author = await DB_Provider.findById(User, post.author, [
-      "id",
-      "gender",
-      "login"
-    ]);
-    post.author = author;
+    const author = await DB_Provider.findById(User, post.author);
+    post.author = DB_Provider.normalize(author);
+    post = DB_Provider.normalize(post);
     return res.json(post);
   }
 }

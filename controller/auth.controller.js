@@ -6,12 +6,9 @@ import DB_Provider from "../model/provider.js";
 class AuthController {
   async register(req, res) {
     try {
-      const createdUser = await DB_Provider.create(User, req.body, [
-        "_id",
-        "login",
-        "gender"
-      ]);
-      return res.json(createdUser);
+      const createdUser = await DB_Provider.create(User, req.body, "withReturn");
+      const user = DB_Provider.normalize(createdUser);
+      return res.json(user);
     } catch (e) {
       return res.status(500).json({
         message: `USER CREATION FAILED`,
@@ -34,7 +31,7 @@ class AuthController {
       expiresIn: JWT.LIFE.REFRESH
     });
 
-    req.user.password = "";
+    req.user = DB_Provider.normalize(req.user);
 
     return res
       .cookie("X-Refresh-Token", refreshToken, {

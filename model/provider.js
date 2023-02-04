@@ -19,12 +19,12 @@ class DB_Provider {
     return await this.db.findAll(model);
   }
 
-  async findById(model, id, filter = false) {
-    return await this.db.findById(model, id, filter);
+  async findById(model, id) {
+    return await this.db.findById(model, id);
   }
 
-  async create(model, data, filter = false) {
-    return await this.db.create(model, data, filter);
+  async create(model, data) {
+    return await this.db.create(model, data);
   }
 
   async update(model, data) {
@@ -37,6 +37,14 @@ class DB_Provider {
 
   async clear(model) {
     return await this.db.clear(model);
+  }
+
+  normalize(result) {
+    return this.db.normalize(result);
+  }
+
+  normalizeAll(results) {
+    return this.db.normalizeAll(results);
   }
 }
 
