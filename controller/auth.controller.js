@@ -19,11 +19,10 @@ class AuthController {
 
   async login(req, res) {
     const payload = {
-      id: req.user._id,
-      email: req.user.email,
-      name: req.user.name,
-      surname: req.user.surname
+      ...req.user,
+      id: req.user._id
     };
+    delete payload._id;
 
     const accessToken = jwt.sign(payload, JWT.SECRET.ACCESS, {
       expiresIn: JWT.LIFE.ACCESS
