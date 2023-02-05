@@ -15,7 +15,9 @@ const renewToken = (req) => {
     const decodedRefresh = jwt.verify(refreshToken, JWT.SECRET.REFRESH);
     const payload = {
       id: decodedRefresh.id,
-      login: decodedRefresh.login
+      email: decodedRefresh.email,
+      name: decodedRefresh.name,
+      surname: decodedRefresh.surname
     };
     return jwt.sign(payload, JWT.SECRET.ACCESS, {
       expiresIn: JWT.LIFE.ACCESS

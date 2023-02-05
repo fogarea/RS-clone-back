@@ -23,7 +23,8 @@ class MongoDB {
 
   async findOne(model, query) {
     const result = await model.findOne(query);
-    return { ...result._doc };
+    if (result?._doc) return { ...result._doc };
+    else return null;
   }
 
   async findAll(model) {
@@ -35,7 +36,8 @@ class MongoDB {
     this.validateId(id);
 
     const result = await model.findById(id);
-    return { ...result._doc };
+    if (result?._doc) return { ...result._doc };
+    else return null;
   }
 
   async create(model, data) {

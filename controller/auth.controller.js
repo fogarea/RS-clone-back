@@ -20,7 +20,9 @@ class AuthController {
   async login(req, res) {
     const payload = {
       id: req.user._id,
-      login: req.user.login
+      email: req.user.email,
+      name: req.user.name,
+      surname: req.user.surname
     };
 
     const accessToken = jwt.sign(payload, JWT.SECRET.ACCESS, {

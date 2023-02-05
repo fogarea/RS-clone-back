@@ -6,7 +6,7 @@ import { withUserExists, withValidPassword } from "../middleware/login.middlewar
 import {
   withEncryptedPassword,
   withRequiredLength,
-  withUniqLogin
+  withUniqEmail
 } from "../middleware/register.middleware.js";
 
 const router = new Router();
@@ -14,9 +14,9 @@ const router = new Router();
 router.post(
   "/register",
   [
-    withRequired(["login", "password", "gender"]),
-    withRequiredLength(["login", "password"]),
-    withUniqLogin,
+    withRequired(["email", "password", "name", "surname", "phone"]),
+    withRequiredLength(["email", "password"]),
+    withUniqEmail,
     withEncryptedPassword
   ],
   authController.register.bind(authController)
@@ -25,7 +25,7 @@ router.post(
 router.post(
   "/login",
   [
-    withRequired(["login", "password"]), //
+    withRequired(["email", "password"]), //
     withUserExists,
     withValidPassword
   ],

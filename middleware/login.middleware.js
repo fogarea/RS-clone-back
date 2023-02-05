@@ -5,13 +5,13 @@ import DB_Provider from "../model/provider.js";
 export const withUserExists = async (req, res, next) => {
   if (req.method === "OPTIONS") next();
 
-  const login = req.body.login;
+  const email = req.body.email;
 
-  const user = await DB_Provider.findOne(User, { login });
+  const user = await DB_Provider.findOne(User, { email });
   if (!user) {
     return res.status(404).json({
       message: `USER NOT FOUND`,
-      error: `user with login '${login}' not found`
+      error: `user with email '${email}' not found`
     });
   }
 

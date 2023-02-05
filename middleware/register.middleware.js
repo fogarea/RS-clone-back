@@ -10,11 +10,11 @@ export const withRequiredLength = function (fields) {
       const value = req.body[field];
 
       switch (field) {
-        case "login":
-          if (value.length < 3)
+        case "email":
+          if (value.length < 5)
             return res.status(411).json({
               message: `USER CREATION FAILED`,
-              error: `login must be at least 3 symbols`
+              error: `email must be at least 5 symbols`
             });
           break;
 
@@ -32,16 +32,16 @@ export const withRequiredLength = function (fields) {
   };
 };
 
-export const withUniqLogin = async (req, res, next) => {
+export const withUniqEmail = async (req, res, next) => {
   if (req.method === "OPTIONS") next();
 
-  const login = req.body.login;
-  const user = await DB_Provider.findOne(User, { login });
+  const email = req.body.email;
+  const user = await DB_Provider.findOne(User, { email });
 
   if (user) {
     return res.status(409).json({
       message: `USER CREATION FAILED`,
-      error: `User with login '${login}' already exists`
+      error: `User with email '${email}' already exists`
     });
   }
 
