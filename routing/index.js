@@ -1,11 +1,11 @@
 import authRouter from "./auth.router.js";
 import postsRouter from "./posts.router.js";
-import traningRouter from "./traning.router.js";
-import exerciseRouter from "./exercise.router.js";
+import programRouter from "./program.router.js";
+import trainingRouter from "./training.router.js";
 
 export default {
   auth: authRouter,
   posts: postsRouter,
-  traning: traningRouter,
-  exercise: exerciseRouter
+  program: programRouter,
+  training: trainingRouter
 };

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const Traning = new mongoose.Schema({
+const Program = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   media: [{ type: String, required: true }],
-  exercises: [{ type: String, required: true, ref: "Exercise" }]
+  training: [{ type: String, required: true, ref: "Training" }]
 });
 
-export default mongoose.model("Traning", Traning);
+export default mongoose.model("Program", Program);
