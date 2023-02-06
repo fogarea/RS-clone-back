@@ -1,12 +1,17 @@
 import jwt from "jsonwebtoken";
 import { JWT } from "./../config.js";
 import User from "../model/schema/user.js";
+import Profile from "../model/schema/profile.js";
 import DB_Provider from "../model/provider.js";
 
 class AuthController {
   async register(req, res) {
     try {
+      const createdProfile = await DB_Provider.create(Profile, {}, "withReturn");
+
+      req.body.profile = createdProfile._id;
       const createdUser = await DB_Provider.create(User, req.body, "withReturn");
+
       const user = DB_Provider.normalize(createdUser);
       return res.json(user);
     } catch (e) {

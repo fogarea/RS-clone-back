@@ -24,9 +24,12 @@ app.use(cookies());
 app.use("/auth", Routing.auth);
 app.use("/api", Routing.posts);
 
-// tmp DB fill routers
+// Prigrams and Trainings
 app.use("/api", Routing.program);
 app.use("/api", Routing.training);
+
+// User Profile
+app.use("/api", Routing.profile);
 
 // listen server on port: server.PORT
 app.listen(server.PORT, () => console.log(`SERVER STARTED ON PORT ${server.PORT}`));

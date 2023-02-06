@@ -47,11 +47,12 @@ export class CRUDController {
     }
   }
 
-  async update(req, res) {
+  async update(req, res, raw = false) {
     const item = req.body;
 
     try {
       const updatedItem = await DB_Provider.update(this.model, item);
+      if (raw && typeof raw === "string") return updatedItem;
       return res.json(updatedItem);
     } catch (e) {
       return res.status(500).json({
