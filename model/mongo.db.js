@@ -77,10 +77,34 @@ class MongoDB {
 
   normalizeAll(results) {
     const normalized = [];
-    for (const result of results) {
-      normalized.push(this.normalize(result._doc));
-    }
+    for (const result of results) normalized.push(this.normalize(result._doc));
     return normalized;
+  }
+
+  applyLanguage(results, lang) {
+    const translated = [];
+
+    const translate = (result, lang) => {
+      if (result.hasOwnProperty("en")) {
+        result = result[lang];
+      }
+      return result;
+    };
+
+    for (const result of results) {
+      Object.keys(result).forEach((key) => {
+        if (Array.isArray(result[key])) {
+          result[key] = result[key].map((subResult) => {
+            return translate(subResult._doc || subResult, lang);
+          });
+        } else if (typeof result[key] === "object") {
+          result[key] = translate(result[key], lang);
+        }
+      });
+
+      translated.push(result);
+    }
+    return translated;
   }
 }
 

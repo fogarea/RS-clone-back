@@ -10,7 +10,8 @@ class ProgramController extends CRUDController {
   async get(req, res) {
     const programs = await super.get(req, res, "raw");
     const cleanPrograms = DB_Provider.normalizeAll(programs);
-    return res.json(cleanPrograms);
+    const translatedPrograms = DB_Provider.applyLanguage(cleanPrograms, req.headers.lang);
+    return res.json(translatedPrograms);
   }
 
   async create(req, res) {

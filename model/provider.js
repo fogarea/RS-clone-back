@@ -46,6 +46,10 @@ class DB_Provider {
   normalizeAll(results) {
     return this.db.normalizeAll(results);
   }
+
+  applyLanguage(results, lang) {
+    return this.db.applyLanguage(results, lang);
+  }
 }
 
 const mongo = new mongoDB(DB.MONGO_CFG);

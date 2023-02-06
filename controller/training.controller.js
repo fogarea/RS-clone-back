@@ -10,7 +10,11 @@ class TrainingController extends CRUDController {
   async get(req, res) {
     const tranings = await super.get(req, res, "raw");
     const cleanTrainings = DB_Provider.normalizeAll(tranings);
-    return res.json(cleanTrainings);
+    const translatedTrainings = DB_Provider.applyLanguage(
+      cleanTrainings,
+      req.headers.lang
+    );
+    return res.json(translatedTrainings);
   }
 
   async create(req, res) {
