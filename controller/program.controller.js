@@ -7,6 +7,12 @@ class ProgramController extends CRUDController {
     super(Program, "programs");
   }
 
+  async get(req, res) {
+    const programs = await super.get(req, res, "raw");
+    const cleanPrograms = DB_Provider.normalizeAll(programs);
+    return res.json(cleanPrograms);
+  }
+
   async create(req, res) {
     await super.clear(req, res, "raw");
 
