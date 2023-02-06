@@ -20,9 +20,8 @@ app.use(cors(server.CORS));
 // parse cookies
 app.use(cookies());
 
-// create routes
+// auth
 app.use("/auth", Routing.auth);
-app.use("/api", Routing.posts);
 
 // Prigrams and Trainings
 app.use("/api", Routing.program);
