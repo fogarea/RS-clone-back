@@ -9,16 +9,15 @@ const die = (res, error) => {
   });
 };
 
-const renewToken = (req) => {
+const renewToken = (req, withDie, next) => {
   const refreshToken = req.cookies["X-Refresh-Token"];
   try {
     const decodedRefresh = jwt.verify(refreshToken, JWT.SECRET.REFRESH);
     const payload = { ...decodedRefresh };
-    return jwt.sign(payload, JWT.SECRET.ACCESS, {
-      expiresIn: JWT.LIFE.ACCESS
-    });
+    return jwt.sign(payload, JWT.SECRET.ACCESS);
   } catch (e) {
-    return die(res, e.message);
+    if (withDie) return die(res, e.message);
+    else next();
   }
 };
 
@@ -42,7 +41,7 @@ const withAuth = function (withDie = false) {
       try {
         let refresh = false;
         if (isJwtExpired(accessToken)) {
-          accessToken = renewToken(req);
+          accessToken = renewToken(req, withDie, next);
           refresh = true;
         }
         const decodedAccess = jwt.verify(accessToken, JWT.SECRET.ACCESS);
