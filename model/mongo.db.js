@@ -68,6 +68,7 @@ class MongoDB {
   }
 
   normalize(result) {
+    if (!result) return result;
     if (result._id) result.id = result._id;
     delete result.password;
     delete result._id;

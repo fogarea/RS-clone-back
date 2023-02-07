@@ -27,11 +27,7 @@ class AuthController {
   }
 
   async login(req, res) {
-    const payload = {
-      ...req.user,
-      id: req.user._id
-    };
-    delete payload._id;
+    const payload = DB_Provider.normalize(req.user);
 
     const accessToken = jwt.sign(payload, JWT.SECRET.ACCESS, {
       expiresIn: JWT.LIFE.ACCESS

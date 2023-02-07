@@ -14,7 +14,12 @@ const renewToken = (req, withDie, next) => {
   try {
     const decodedRefresh = jwt.verify(refreshToken, JWT.SECRET.REFRESH);
     const payload = { ...decodedRefresh };
-    return jwt.sign(payload, JWT.SECRET.ACCESS);
+    delete payload.iat;
+    delete payload.exp;
+
+    return jwt.sign(payload, JWT.SECRET.ACCESS, {
+      expiresIn: JWT.LIFE.ACCESS
+    });
   } catch (e) {
     if (withDie) return die(res, e.message);
     else next();
