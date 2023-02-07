@@ -57,7 +57,8 @@ class AuthController {
 
   async user(req, res) {
     const user = req.user ? req.user : null;
-    res.status(200).json(user);
+    const nomalizedUser = DB_Provider.normalize(user);
+    res.status(200).json(nomalizedUser);
   }
 }
 
