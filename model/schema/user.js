@@ -6,7 +6,8 @@ const User = new mongoose.Schema({
   name: { type: String, required: true },
   surname: { type: String, required: true },
   phone: { type: String, required: true },
-  profile: { type: String, required: true, ref: "Profile" }
+  profile: { type: String, required: true, ref: "Profile" },
+  progress: { type: String, required: true, ref: "Progress" }
 });
 
 export default mongoose.model("User", User);
