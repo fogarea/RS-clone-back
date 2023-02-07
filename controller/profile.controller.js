@@ -9,12 +9,16 @@ class ProfileController extends CRUDController {
 
   async getById(req, res) {
     const profile = await super.getById(req, res, "raw");
-    return this.clean(res, profile);
+
+    if (profile?.error) res.status(500).json(profile);
+    else return this.clean(res, profile);
   }
 
   async update(req, res) {
     const profile = await super.update(req, res, "raw");
-    return this.clean(res, profile);
+
+    if (profile?.error) res.status(500).json(profile);
+    else return this.clean(res, profile);
   }
 
   clean(res, profile) {

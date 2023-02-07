@@ -50,7 +50,9 @@ class MongoDB {
     const result = await model.findByIdAndUpdate(data._id, data, {
       new: true
     });
-    return { ...result._doc };
+
+    if (result?._doc) return { ...result._doc };
+    else throw Error(`item with this id not found`);
   }
 
   async delete(model, id) {

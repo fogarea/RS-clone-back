@@ -12,10 +12,12 @@ export class CRUDController {
       if (raw && typeof raw === "string") return items;
       return res.json(items);
     } catch (e) {
-      return res.status(500).json({
+      const err = {
         message: `CANNOT READ ${this.endpoint.toUpperCase()}`,
         error: e.message
-      });
+      };
+      if (raw && typeof raw === "string") return err;
+      else return res.status(500).json();
     }
   }
 
@@ -27,10 +29,12 @@ export class CRUDController {
       if (raw && typeof raw === "string") return item;
       return res.json(item);
     } catch (e) {
-      return res.status(500).json({
+      const err = {
         message: `CANNOT GET ${this.endpoint.toUpperCase()} BY ID: ${itemID}`,
         error: e.message
-      });
+      };
+      if (raw && typeof raw === "string") return err;
+      else return res.status(500).json();
     }
   }
 
@@ -40,10 +44,12 @@ export class CRUDController {
       if (raw && typeof raw === "string") return createdItem;
       return res.json(createdItem);
     } catch (e) {
-      return res.status(500).json({
+      const err = {
         message: `CANNOT CREATE ${this.endpoint.toUpperCase()}`,
         error: e.message
-      });
+      };
+      if (raw && typeof raw === "string") return err;
+      else return res.status(500).json();
     }
   }
 
@@ -55,10 +61,12 @@ export class CRUDController {
       if (raw && typeof raw === "string") return updatedItem;
       return res.json(updatedItem);
     } catch (e) {
-      return res.status(500).json({
+      const err = {
         message: `CANNOT UPDATE ${this.endpoint.toUpperCase()} WITH ID: ${item._id}`,
         error: e.message
-      });
+      };
+      if (raw && typeof raw === "string") return err;
+      else return res.status(500).json();
     }
   }
 
