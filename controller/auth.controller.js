@@ -15,9 +15,10 @@ class AuthController {
       req.body.progress = createdProgress._id;
 
       const createdUser = await DB_Provider.create(User, req.body, "withReturn");
+      const nomalizedUser = DB_Provider.normalize(createdUser);
+      const filledUser = await this.withData(nomalizedUser);
 
-      const user = DB_Provider.normalize(createdUser);
-      return res.json(user);
+      return res.json(filledUser);
     } catch (e) {
       return res.status(500).json({
         message: `USER CREATION FAILED`,
@@ -37,7 +38,8 @@ class AuthController {
       expiresIn: JWT.LIFE.REFRESH
     });
 
-    req.user = DB_Provider.normalize(req.user);
+    const nomalizedUser = DB_Provider.normalize(req.user);
+    const filledUser = await this.withData(nomalizedUser);
 
     return res
       .cookie("X-Refresh-Token", refreshToken, {
@@ -48,13 +50,36 @@ class AuthController {
       })
       .header("X-Access-Token", accessToken)
       .status(200)
-      .json(req.user);
+      .json(filledUser);
   }
 
   async user(req, res) {
     const user = req.user ? req.user : null;
     const nomalizedUser = DB_Provider.normalize(user);
-    res.status(200).json(nomalizedUser);
+    const filledUser = await this.withData(nomalizedUser);
+
+    res.status(200).json(filledUser);
+  }
+
+  async withData(nomalizedUser) {
+    if (!nomalizedUser) return nomalizedUser;
+
+    let nomalizedProfile = null;
+    if (nomalizedUser && nomalizedUser.profile) {
+      const profile = await DB_Provider.findById(Profile, nomalizedUser.profile);
+      nomalizedProfile = DB_Provider.normalize(profile);
+    }
+
+    let nomalizedProgress = null;
+    if (nomalizedUser && nomalizedUser.progress) {
+      const progress = await DB_Provider.findById(Progress, nomalizedUser.progress);
+      nomalizedProgress = DB_Provider.normalize(progress);
+    }
+
+    nomalizedUser.profile = nomalizedProfile;
+    nomalizedUser.progress = nomalizedProgress;
+
+    return nomalizedUser;
   }
 }
 
