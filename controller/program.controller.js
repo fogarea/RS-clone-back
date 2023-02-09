@@ -13,14 +13,35 @@ class ProgramController extends CRUDController {
     const cleanPrograms = DB_Provider.normalizeAll(programs);
     const translatedPrograms = DB_Provider.applyLanguage(cleanPrograms, req.headers.lang);
 
+    const findTraningIds = [];
+    for (const program of translatedPrograms) {
+      for (const training of program.trainings) {
+        findTraningIds.push(training);
+      }
+    }
+
+    const trainings = await DB_Provider.findMany(Training, {
+      _id: { $in: [...new Set(findTraningIds)] }
+    });
+
     for (const program of translatedPrograms) {
       const realTranings = [];
-      for (const training of program.trainings) {
-        const trainingData = await DB_Provider.findById(Training, training);
-        const cleanTrainingData = DB_Provider.normalize(trainingData);
-        realTranings.push(cleanTrainingData);
-      }
-      program.trainings = realTranings;
+      program.trainings.forEach((training) => {
+        const trainingData = trainings.find(
+          (realTraning) => realTraning.program == program.id && realTraning.id == training
+        );
+        if (trainingData) {
+          const cleanTrainingData = DB_Provider.normalize(trainingData._doc);
+          realTranings.push(cleanTrainingData);
+        }
+      });
+
+      const translatedTrainings = DB_Provider.applyLanguage(
+        realTranings,
+        req.headers.lang
+      );
+
+      program.trainings = translatedTrainings;
     }
 
     return res.json(translatedPrograms);
@@ -38,6 +59,15 @@ class ProgramController extends CRUDController {
     }
 
     return res.json(programs);
+  }
+
+  async update(req, res) {
+    for (const program of req.body) {
+      const data = { body: program };
+      await super.update(data, res, "raw");
+    }
+
+    return res.json(null);
   }
 }
 

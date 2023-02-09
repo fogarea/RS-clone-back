@@ -30,6 +30,15 @@ class TrainingController extends CRUDController {
 
     return res.json(trainings);
   }
+
+  async update(req, res) {
+    for (const training of req.body) {
+      const data = { body: training };
+      await super.update(data, res, "raw");
+    }
+
+    return res.json(null);
+  }
 }
 
 export default new TrainingController();

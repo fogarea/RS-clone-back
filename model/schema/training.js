@@ -16,7 +16,8 @@ const Training = new mongoose.Schema({
     }
   ],
   media: { type: String, required: true },
-  calories: { type: Number, required: true }
+  calories: { type: Number, required: true },
+  program: { type: String, required: true, ref: "Program" }
 });
 
 export default mongoose.model("Training", Training);

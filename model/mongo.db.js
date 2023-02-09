@@ -32,6 +32,11 @@ class MongoDB {
     return [...result];
   }
 
+  async findMany(model, query) {
+    const result = await model.find(query);
+    return [...result];
+  }
+
   async findById(model, id) {
     this.validateId(id);
 
@@ -95,15 +100,16 @@ class MongoDB {
     };
 
     for (const result of results) {
-      Object.keys(result).forEach((key) => {
-        if (Array.isArray(result[key])) {
-          result[key] = result[key].map((subResult) => {
-            return translate(subResult._doc || subResult, lang);
-          });
-        } else if (typeof result[key] === "object") {
-          result[key] = translate(result[key], lang);
-        }
-      });
+      if (result)
+        Object.keys(result).forEach((key) => {
+          if (Array.isArray(result[key])) {
+            result[key] = result[key].map((subResult) => {
+              return translate(subResult._doc || subResult, lang);
+            });
+          } else if (typeof result[key] === "object") {
+            result[key] = translate(result[key], lang);
+          }
+        });
 
       translated.push(result);
     }

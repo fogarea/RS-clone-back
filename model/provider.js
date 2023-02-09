@@ -15,6 +15,10 @@ class DB_Provider {
     return await this.db.findOne(model, query);
   }
 
+  async findMany(model, query) {
+    return await this.db.findMany(model, query);
+  }
+
   async findAll(model) {
     return await this.db.findAll(model);
   }
