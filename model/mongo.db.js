@@ -60,6 +60,11 @@ class MongoDB {
     else throw Error(`item with this id not found`);
   }
 
+  async findOneAndUpdate(model, filter, data) {
+    const item = await model.findOneAndUpdate(filter, data);
+    return item._doc;
+  }
+
   async delete(model, id) {
     this.validateId(id);
     const result = await model.findByIdAndDelete(id);

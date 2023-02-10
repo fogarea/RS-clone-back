@@ -59,7 +59,29 @@ class AuthController {
     const nomalizedUser = DB_Provider.normalize(user);
     const filledUser = await this.withData(nomalizedUser);
 
-    res.status(200).json(filledUser);
+    res.json(filledUser);
+  }
+
+  async edit(req, res) {
+    const id = req.params?.id;
+    if (!id || !req.body || !req.user) return res.json(null);
+
+    const update = {};
+    const editableKey = ["avatar", "name", "surname", "phone"];
+    Object.keys(req.body).forEach((key) => {
+      if (editableKey.includes(key)) {
+        update[key] = req.body[key];
+      }
+    });
+
+    const editedUser = await DB_Provider.findOneAndUpdate(User, { _id: id }, update);
+    const cleanUser = DB_Provider.normalize(editedUser);
+
+    return res.json(cleanUser);
+  }
+
+  async findById(id) {
+    return Promise.resolve(id);
   }
 
   async withData(nomalizedUser) {

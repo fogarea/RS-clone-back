@@ -27,6 +27,10 @@ class DB_Provider {
     return await this.db.findById(model, id);
   }
 
+  async findOneAndUpdate(model, filter, data) {
+    return await this.db.findOneAndUpdate(model, filter, data);
+  }
+
   async create(model, data) {
     return await this.db.create(model, data);
   }
