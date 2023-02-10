@@ -74,10 +74,16 @@ class AuthController {
       }
     });
 
-    const editedUser = await DB_Provider.findOneAndUpdate(User, { _id: id }, update);
-    const cleanUser = DB_Provider.normalize(editedUser);
-
-    return res.json(cleanUser);
+    try {
+      const editedUser = await DB_Provider.findOneAndUpdate(User, { _id: id }, update);
+      const cleanUser = DB_Provider.normalize(editedUser);
+      return res.json(cleanUser);
+    } catch (e) {
+      return res.status(400).json({
+        message: `USER WASN'T EDITED`,
+        error: e
+      });
+    }
   }
 
   async findById(id) {
