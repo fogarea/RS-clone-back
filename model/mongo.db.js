@@ -80,6 +80,8 @@ class MongoDB {
     delete result.password;
     delete result._id;
     delete result.__v;
+    delete result.iat;
+    delete result.exp;
     return result;
   }
 

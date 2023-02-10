@@ -3,6 +3,7 @@ import { JWT } from "./../config.js";
 import User from "../model/schema/user.js";
 import Profile from "../model/schema/profile.js";
 import Progress from "../model/schema/progress.js";
+import Meditation from "../model/schema/meditation.js";
 import DB_Provider from "../model/provider.js";
 
 class AuthController {
@@ -65,19 +66,25 @@ class AuthController {
     if (!nomalizedUser) return nomalizedUser;
 
     let nomalizedProfile = null;
-    if (nomalizedUser && nomalizedUser.profile) {
+    if (nomalizedUser.profile) {
       const profile = await DB_Provider.findById(Profile, nomalizedUser.profile);
       nomalizedProfile = DB_Provider.normalize(profile);
     }
 
     let nomalizedProgress = null;
-    if (nomalizedUser && nomalizedUser.progress) {
+    if (nomalizedUser.progress) {
       const progress = await DB_Provider.findById(Progress, nomalizedUser.progress);
       nomalizedProgress = DB_Provider.normalize(progress);
     }
 
+    const meditations = await DB_Provider.findMany(Meditation, {
+      owner: nomalizedUser.id
+    });
+    const nomalizedMeditations = DB_Provider.normalizeAll(meditations || []);
+
     nomalizedUser.profile = nomalizedProfile;
     nomalizedUser.progress = nomalizedProgress;
+    nomalizedUser.meditations = nomalizedMeditations;
 
     return nomalizedUser;
   }
