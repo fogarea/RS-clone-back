@@ -30,6 +30,9 @@ app.use("/api", Routing.training);
 // Progress
 app.use("/api", Routing.progress);
 
+// Meditaion
+app.use("/api", Routing.meditation);
+
 // User Profile
 app.use("/api", Routing.profile);
 

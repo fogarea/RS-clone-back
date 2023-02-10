@@ -17,7 +17,7 @@ export class CRUDController {
         error: e.message
       };
       if (raw && typeof raw === "string") return err;
-      else return res.status(500).json();
+      else return res.status(500).json(err);
     }
   }
 
@@ -34,7 +34,7 @@ export class CRUDController {
         error: e.message
       };
       if (raw && typeof raw === "string") return err;
-      else return res.status(500).json();
+      else return res.status(500).json(err);
     }
   }
 
@@ -49,7 +49,7 @@ export class CRUDController {
         error: e.message
       };
       if (raw && typeof raw === "string") return err;
-      else return res.status(500).json();
+      else return res.status(500).json(err);
     }
   }
 
@@ -66,21 +66,24 @@ export class CRUDController {
         error: e.message
       };
       if (raw && typeof raw === "string") return err;
-      else return res.status(500).json();
+      else return res.status(500).json(err);
     }
   }
 
-  async delete(req, res) {
+  async delete(req, res, raw = false) {
     const itemID = req.params?.id;
 
     try {
       const deletedItem = await DB_Provider.delete(this.model, itemID);
+      if (raw && typeof raw === "string") return deletedItem;
       return res.json(deletedItem);
     } catch (e) {
-      return res.status(500).json({
+      const err = {
         message: `CANNOT DELETE ${this.endpoint.toUpperCase()} WITH ID: ${itemID}`,
         error: e.message
-      });
+      };
+      if (raw && typeof raw === "string") return err;
+      else return res.status(500).json(err);
     }
   }
 
