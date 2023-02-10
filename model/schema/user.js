@@ -8,7 +8,14 @@ const User = new mongoose.Schema({
   phone: { type: String, required: true },
   avatar: { type: Number, required: true, default: 0 },
   profile: { type: String, required: true, ref: "Profile" },
-  progress: { type: String, required: true, ref: "Progress" }
+  progress: { type: String, required: true, ref: "Progress" },
+  achievements: {
+    fire: { type: Boolean, required: true, default: false },
+    calendar: { type: Boolean, required: true, default: false },
+    salad: { type: Boolean, required: true, default: false },
+    dumbbells: { type: Boolean, required: true, default: false },
+    water: { type: Boolean, required: true, default: false }
+  }
 });
 
 export default mongoose.model("User", User);
