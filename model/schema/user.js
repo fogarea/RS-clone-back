@@ -6,6 +6,7 @@ const User = new mongoose.Schema({
   name: { type: String, required: true },
   surname: { type: String, required: true },
   phone: { type: String, required: true },
+  avatar: { type: Number, required: true, default: 0 },
   profile: { type: String, required: true, ref: "Profile" },
   progress: { type: String, required: true, ref: "Progress" }
 });
