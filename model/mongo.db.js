@@ -62,7 +62,8 @@ class MongoDB {
 
   async findOneAndUpdate(model, filter, data) {
     const item = await model.findOneAndUpdate(filter, data);
-    return item._doc;
+    if (item?._doc) return item._doc;
+    else return null;
   }
 
   async delete(model, id) {
