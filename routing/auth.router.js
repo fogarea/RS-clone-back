@@ -8,6 +8,7 @@ import {
   withRequiredLength,
   withUniqEmail
 } from "../middleware/register.middleware.js";
+import withUser from "../middleware/user.middleware.js";
 
 const router = new Router();
 
@@ -33,6 +34,10 @@ router.post(
 );
 
 router.patch("/edit/:id", withAuth(true), authController.edit.bind(authController));
-router.get("/user", withAuth(false), authController.user.bind(authController));
+router.get(
+  "/user",
+  [withAuth(false), withUser],
+  authController.user.bind(authController)
+);
 
 export default router;

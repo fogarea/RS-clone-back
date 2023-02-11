@@ -29,7 +29,7 @@ class AuthController {
   }
 
   async login(req, res) {
-    const payload = DB_Provider.normalize(req.user);
+    const payload = { id: req.user._id };
 
     const accessToken = jwt.sign(payload, JWT.SECRET.ACCESS, {
       expiresIn: JWT.LIFE.ACCESS
@@ -64,7 +64,7 @@ class AuthController {
 
   async edit(req, res) {
     const id = req.params?.id;
-    if (!id || !req.body || !req.user) return res.json(null);
+    if (!id || !req.body) return res.json(null);
 
     const update = {};
     const editableKey = ["avatar", "name", "surname", "phone", "achievements"];

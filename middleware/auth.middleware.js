@@ -13,9 +13,7 @@ const renewToken = (req, withDie, next) => {
   const refreshToken = req.cookies["X-Refresh-Token"];
   try {
     const decodedRefresh = jwt.verify(refreshToken, JWT.SECRET.REFRESH);
-    const payload = { ...decodedRefresh };
-    delete payload.iat;
-    delete payload.exp;
+    const payload = { id: decodedRefresh.id };
 
     return jwt.sign(payload, JWT.SECRET.ACCESS, {
       expiresIn: JWT.LIFE.ACCESS
@@ -50,10 +48,11 @@ const withAuth = function (withDie = false) {
           refresh = true;
         }
         const decodedAccess = jwt.verify(accessToken, JWT.SECRET.ACCESS);
-        req.user = decodedAccess;
+        req.userId = decodedAccess.id;
         if (refresh) res.set("X-Access-Token", accessToken);
         next();
       } catch (err) {
+        console.log(err);
         if (withDie) return die(res, "invalid token");
         else next();
       }
