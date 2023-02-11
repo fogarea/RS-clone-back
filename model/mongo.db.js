@@ -61,7 +61,9 @@ class MongoDB {
   }
 
   async findOneAndUpdate(model, filter, data) {
-    const item = await model.findOneAndUpdate(filter, data);
+    const item = await model.findOneAndUpdate(filter, data, {
+      new: true
+    });
     if (item?._doc) return item._doc;
     else return null;
   }
