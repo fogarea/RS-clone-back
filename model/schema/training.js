@@ -15,6 +15,7 @@ const Training = new mongoose.Schema({
       ru: { type: String, required: true }
     }
   ],
+  icon: { type: String, required: true },
   media: { type: String, required: true },
   calories: { type: Number, required: true },
   program: { type: String, required: true, ref: "Program" }
