@@ -4,7 +4,11 @@ dotenv.config();
 export const server = {
   PORT: process.env.PORT,
   CORS: {
-    origin: ["http://localhost:3000", "https://elijah-i.github.io"],
+    origin: [
+      "http://localhost:3000",
+      "https://elijah-i.github.io",
+      "https://fogarea.github.io"
+    ],
     credentials: true,
     preflightContinue: true,
     exposedHeaders: ["X-Access-Token"],
