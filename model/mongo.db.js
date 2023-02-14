@@ -14,8 +14,8 @@ class MongoDB {
 
   async connect() {
     try {
+      mongoose.set("strictQuery", true);
       await mongoose.connect(this.config.URL, this.config.SETTINGS);
-      console.log("Mongo DB connected");
     } catch (e) {
       console.error(`DB CONNECTION FAILED: ${e}`);
     }
@@ -124,6 +124,10 @@ class MongoDB {
       translated.push(result);
     }
     return translated;
+  }
+
+  async close() {
+    await mongoose.connection.close();
   }
 }
 

@@ -52,7 +52,6 @@ const withAuth = function (withDie = false) {
         if (refresh) res.set("X-Access-Token", accessToken);
         next();
       } catch (err) {
-        console.log(err);
         if (withDie) return die(res, "invalid token");
         else next();
       }

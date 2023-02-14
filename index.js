@@ -37,4 +37,6 @@ app.use("/api", Routing.meditation);
 app.use("/api", Routing.profile);
 
 // listen server on port: server.PORT
-app.listen(server.PORT, () => console.log(`SERVER STARTED ON PORT ${server.PORT}`));
+const connection = app.listen(server.PORT);
+
+export { app, connection };

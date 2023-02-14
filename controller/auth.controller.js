@@ -59,7 +59,7 @@ class AuthController {
     const nomalizedUser = DB_Provider.normalize(user);
     const filledUser = await this.withData(nomalizedUser);
 
-    res.json(filledUser);
+    return res.json(filledUser);
   }
 
   async edit(req, res) {

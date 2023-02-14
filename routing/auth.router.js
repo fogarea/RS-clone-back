@@ -1,11 +1,10 @@
 import { Router } from "express";
 import authController from "../controller/auth.controller.js";
 import withAuth from "../middleware/auth.middleware.js";
-import { withRequired } from "../middleware/required.middleware.js";
+import { withRequired, withRequiredLength } from "../middleware/required.middleware.js";
 import { withUserExists, withValidPassword } from "../middleware/login.middleware.js";
 import {
   withEncryptedPassword,
-  withRequiredLength,
   withUniqEmail
 } from "../middleware/register.middleware.js";
 import withUser from "../middleware/user.middleware.js";
@@ -34,6 +33,7 @@ router.post(
 );
 
 router.patch("/edit/:id", withAuth(true), authController.edit.bind(authController));
+
 router.get(
   "/user",
   [withAuth(false), withUser],
