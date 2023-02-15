@@ -13,11 +13,17 @@ class MeditationController extends CRUDController {
   }
 
   async create(req, res) {
+    req.body.owner = req.userId;
+    delete req.body.id;
+    delete req.body._id;
+
     const createdMeditation = await super.create(req, res, "raw");
     return this.clean(res, createdMeditation);
   }
 
   async update(req, res) {
+    req.body.owner = req.userId;
+
     const updatedMeditation = await super.update(req, res, "raw");
     return this.clean(res, updatedMeditation);
   }
