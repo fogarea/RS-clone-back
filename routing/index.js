@@ -5,6 +5,7 @@ import profileRouter from "./profile.router.js";
 import progressRouter from "./progress.router.js";
 import meditationRouter from "./meditation.router.js";
 import trackRouter from "./track.router.js";
+import mealRouter from "./meal.router.js";
 
 export default {
   auth: authRouter,
@@ -13,5 +14,6 @@ export default {
   profile: profileRouter,
   progress: progressRouter,
   meditation: meditationRouter,
-  track: trackRouter
+  track: trackRouter,
+  meal: mealRouter
 };

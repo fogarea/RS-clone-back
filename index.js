@@ -30,6 +30,9 @@ app.use("/api", Routing.training);
 // Tracks
 app.use("/api", Routing.track);
 
+// Meals
+app.use("/api", Routing.meal);
+
 // Progress
 app.use("/api", Routing.progress);
 
