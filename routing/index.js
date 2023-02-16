@@ -4,6 +4,7 @@ import trainingRouter from "./training.router.js";
 import profileRouter from "./profile.router.js";
 import progressRouter from "./progress.router.js";
 import meditationRouter from "./meditation.router.js";
+import trackRouter from "./track.router.js";
 
 export default {
   auth: authRouter,
@@ -11,5 +12,6 @@ export default {
   training: trainingRouter,
   profile: profileRouter,
   progress: progressRouter,
-  meditation: meditationRouter
+  meditation: meditationRouter,
+  track: trackRouter
 };

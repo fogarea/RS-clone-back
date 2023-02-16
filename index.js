@@ -27,6 +27,9 @@ app.use("/auth", Routing.auth);
 app.use("/api", Routing.program);
 app.use("/api", Routing.training);
 
+// Tracks
+app.use("/api", Routing.track);
+
 // Progress
 app.use("/api", Routing.progress);
 
