@@ -11,6 +11,7 @@ beforeEach(async () => {
       password: "qwerty"
     },
     user: {
+      goals: {},
       achievements: {},
       email: "elferno@inbox.ru",
       name: "Elijah",

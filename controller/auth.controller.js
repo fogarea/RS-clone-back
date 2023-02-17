@@ -67,7 +67,7 @@ class AuthController {
     if (!id || !req.body) return res.json(null);
 
     const update = {};
-    const editableKey = ["avatar", "name", "surname", "phone", "achievements"];
+    const editableKey = ["avatar", "name", "surname", "phone", "achievements", "goals"];
     Object.keys(req.body).forEach((key) => {
       if (editableKey.includes(key)) {
         update[key] = req.body[key];

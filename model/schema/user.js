@@ -9,6 +9,10 @@ const User = new mongoose.Schema({
   avatar: { type: Number, required: true, default: 0 },
   profile: { type: String, required: true, ref: "Profile" },
   progress: { type: String, required: true, ref: "Progress" },
+  goals: {
+    water: { type: Number, required: true, default: 0 },
+    steps: { type: Number, required: true, default: 0 }
+  },
   achievements: {
     fire: { type: Boolean, required: true, default: false },
     calendar: { type: Boolean, required: true, default: false },
