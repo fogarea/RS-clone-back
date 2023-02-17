@@ -23,14 +23,17 @@ export const withUserExists = async (req, res, next) => {
 export const withValidPassword = async (req, res, next) => {
   if (req.method === "OPTIONS") next();
 
+  const lang = req.headers.lang || "en";
+
   const user = req.user;
   const password = req.body.password;
 
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) {
     return res.status(403).json({
-      message: `USER NOT FOUND`,
-      error: `wrong password`
+      message: lang === "en" ? `AUTHORIZATION ERROR` : "ОШИБКА АВТОРИЗАЦИИ",
+      error: lang === "en" ? `wrong password` : "неверный пароль",
+      code: 403
     });
   }
 

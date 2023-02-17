@@ -5,13 +5,19 @@ import DB_Provider from "../model/provider.js";
 export const withUniqEmail = async (req, res, next) => {
   if (req.method === "OPTIONS") next();
 
+  const lang = req.headers.lang || "en";
+
   const email = req.body.email;
   const user = await DB_Provider.findOne(User, { email });
 
   if (user) {
     return res.status(409).json({
-      message: `USER CREATION FAILED`,
-      error: `User with email '${email}' already exists`
+      message: lang === "en" ? "REGISTRATION ERROR" : "ОШИБКА РЕГИСТРАЦИИ",
+      error:
+        lang === "en"
+          ? `User with email '${email}' already exists`
+          : `Пользователь с email '${email}' уже существует`,
+      code: 409
     });
   }
 
