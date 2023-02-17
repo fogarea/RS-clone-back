@@ -5,7 +5,7 @@ import DB_Provider from "../model/provider.js";
 export const withUniqEmail = async (req, res, next) => {
   if (req.method === "OPTIONS") next();
 
-  const lang = req.headers.lang || "en";
+  const lang = req?.headers?.lang || "en";
 
   const email = req.body.email;
   const user = await DB_Provider.findOne(User, { email });

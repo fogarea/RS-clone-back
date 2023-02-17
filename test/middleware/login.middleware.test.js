@@ -30,14 +30,16 @@ describe("withUserExists middleware", () => {
   });
 
   it("Should return Result with Error for not existed Email", async () => {
+    const testEmail = "not existed email";
+
     const req = {
       body: {
-        email: "not existed email"
+        email: testEmail
       }
     };
     const expectedResult = {
       message: "USER NOT FOUND",
-      error: "user with email 'not existed email' not found"
+      error: `user with email '${testEmail}' not found`
     };
 
     const result = await withUserExists(req, res, next);

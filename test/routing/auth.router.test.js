@@ -29,7 +29,8 @@ describe("API auth route", function () {
       password: "wrong password"
     };
     const expectedRes = {
-      message: "USER NOT FOUND",
+      code: 403,
+      message: "AUTHORIZATION ERROR",
       error: "wrong password"
     };
 
