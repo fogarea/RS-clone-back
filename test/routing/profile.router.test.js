@@ -11,7 +11,7 @@ describe("API auth route", function () {
     const token = createToken("63e60b26683736b3f269e517");
     const expectedResponse = {
       birthday: "1986-09-17T00:00:00.000Z",
-      gender: "Male",
+      gender: "male",
       height: 190,
       weight: 90,
       program: "63e3ca4403d35fe7bbb35e1c",
