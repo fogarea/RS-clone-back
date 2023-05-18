@@ -7,7 +7,8 @@ export const server = {
     origin: [
       "http://localhost:3000",
       "https://elijah-i.github.io",
-      "https://fogarea.github.io"
+      "https://fogarea.github.io",
+      "https://fitness-x.netlify.app/"
     ],
     credentials: true,
     preflightContinue: true,
